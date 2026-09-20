@@ -3,85 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projetos, Voluntariado e Doações - ONG Mãos Abertas</title>
-    <link rel="stylesheet" href="css/style.css">
+  <title>Projetos - ONG Mãos Abertas</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Cabeçalho e Navegação Principal -->
-  <header>
-    <h1>Projetos Sociais e Engajamento Comunitário</h1>
-    <nav aria-label="Navegação principal">
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="projetos.html">Nossos Projetos</a></li>
-        <li><a href="cadastro.html">Quero Apoiar</a></li>
-      </ul>
-    </nav>
+  <header class="header">
+    <div class="container header__inner">
+      <h1 class="header__brand">ONG Mãos Abertas</h1>
+      <nav aria-label="Navegação principal">
+        <ul class="header__nav-list">
+          <li><a href="index.html" class="header__link">Início</a></li>
+          <li><a href="projetos.html" class="header__link" style="color: var(--color-primary);">Nossos Projetos</a></li>
+          <li><a href="cadastro.html" class="btn btn--secondary">Quero Apoiar</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Conteúdo Central -->
-  <main>
-    <!-- Bloco 1: Projetos Sociais Ativos -->
+  <main class="container" style="margin-top: 3rem;">
+    
+    <!-- Projetos Ativos nos Cartões -->
     <section id="projetos-ativos">
-      <h2>Nossas Frentes de Atuação</h2>
-      
-      <article>
-        <h3>Educação para o Futuro</h3>
-        <p>Apoio pedagógico, oficinas de leitura e reforço escolar para crianças da comunidade.</p>
-        <ul>
-          <li>Mais de 200 jovens atendidos mensalmente.</li>
-          <li>Oficinas de informática básica e robótica.</li>
-        </ul>
-      </article>
+      <h2 style="color: var(--color-primary); margin-bottom: 1.5rem;">Nossas Frentes de Atuação</h2>
+      <div class="grid-12">
+        <article class="col-12 col-md-6 card">
+          <div class="card__body">
+            <h3 class="card__title">Educação para o Futuro</h3>
+            <p class="card__text">Apoio pedagógico, oficinas de leitura e reforço escolar para crianças da comunidade.</p>
+            <ul style="margin-left: 1.5rem; color: var(--color-text-muted);">
+              <li>Mais de 200 jovens atendidos mensalmente.</li>
+              <li>Oficinas de informática básica e robótica.</li>
+            </ul>
+          </div>
+        </article>
 
-      <article>
-        <h3>Esporte Cidadão</h3>
-        <p>Incentivo à prática de esportes coletivos como ferramenta de disciplina, saúde e inclusão social.</p>
-        <ul>
-          <li>Treinos semanais de futebol e vôlei.</li>
-          <li>Acompanhamento nutricional e físico comunitário.</li>
-        </ul>
-      </article>
+        <article class="col-12 col-md-6 card">
+          <div class="card__body">
+            <h3 class="card__title">Esporte Cidadão</h3>
+            <p class="card__text">Incentivo à prática de esportes coletivos como ferramenta de disciplina, saúde e inclusão social.</p>
+            <ul style="margin-left: 1.5rem; color: var(--color-text-muted);">
+              <li>Treinos semanais de futebol e vôlei.</li>
+              <li>Acompanhamento nutricional e físico.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- Bloco 2: Seção Dedicada ao Voluntariado -->
-    <section id="voluntariado">
-      <h2>Faça Parte: Seja um Voluntário</h2>
-      <p>Doar o seu tempo e talento é uma das formas mais poderosas de transformar realidades em nossa comunidade.</p>
+    <!-- Doações -->
+    <section id="doacoes" class="form-section">
+      <h2 style="color: var(--color-primary); margin-bottom: 1rem;">Campanhas de Doação e Apoio Financeiro</h2>
+      <p style="margin-bottom: 1.5rem;">Todas as atividades da ONG são mantidas por meio de doações voluntárias de pessoas e empresas parceiras com total transparência.</p>
       
-      <article>
-        <h3>Como Funciona o Ingresso de Voluntários</h3>
-        <p>Para se juntar à nossa equipe, siga as etapas abaixo:</p>
-        <ol>
-          <li>Identifique a sua área de preferência (educação, esportes ou apoio operacional).</li>
-          <li>Envie uma mensagem manifestando interesse para nossa equipe de coordenação.</li>
-          <li>Participe da nossa roda de integração presencial no primeiro sábado do mês.</li>
-        </ol>
-      </article>
+      <div class="card">
+        <div class="card__body">
+          <h3 class="card__title">Como Contribuir Financeiramente</h3>
+          <p class="card__text">Você pode realizar transferências de qualquer valor utilizando a nossa chave Pix institucional:</p>
+          <p class="card__text" style="background: var(--color-bg); padding: 1rem; border-radius: 8px;">
+            <strong>Chave Pix (E-mail):</strong> pix@maosabertas.org.br<br>
+            <strong>Titular:</strong> Associação Comunitária ONG Mãos Abertas
+          </p>
+        </div>
+      </div>
     </section>
 
-    <!-- Bloco 3: Seção de Apoio e Campanhas de Doação -->
-    <section id="doacoes">
-      <h2>Campanhas de Doação e Apoio Financeiro</h2>
-      <p>Todas as atividades da ONG são mantidas por meio de doações voluntárias de pessoas e empresas parceiras com total transparência.</p>
-      
-      <article>
-        <h3>Como Contribuir Financeiramente</h3>
-        <p>Você pode realizar transferências de qualquer valor utilizando a nossa chave Pix institucional:</p>
-        <p><strong>Chave Pix (E-mail):</strong> pix@maosabertas.org.br</p>
-        <p><strong>Titular:</strong> Associação Comunitária ONG Mãos Abertas</p>
-        <p><em>Os relatórios financeiros e de prestação de contas são publicados mensalmente para auditoria pública.</em></p>
-      </article>
-    </section>
   </main>
 
-  <!-- Rodapé Institucional -->
-  <footer>
-    <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
-    <address>
-      Dúvidas sobre doações ou voluntariado? Fale conosco: contato@maosabertas.org.br
-    </address>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
+    </div>
   </footer>
 
 </body>
