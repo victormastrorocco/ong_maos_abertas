@@ -1,1 +1,321 @@
 
+/* ==========================================================================
+   1. DESIGN SYSTEM E VARIÁVEIS (:root)
+   ========================================================================== */
+:root {
+  /* Cores Principais e Interação */
+  --color-primary: #1b6ca8;
+  --color-primary-hover: #134e78;
+  --color-secondary: #e28743;
+  --color-secondary-hover: #c46824;
+
+  /* Estados e Validações */
+  --color-success: #198754;
+  --color-danger: #dc3545;
+
+  /* Superfícies e Tons Neutros */
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text-main: #212529;
+  --color-text-muted: #495057;
+
+  /* Tipografia (Escala Modular em rem) */
+  --font-base-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.875rem; /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-md: 1.25rem;   /* 20px */
+  --font-size-lg: 1.75rem;   /* 28px */
+  --font-size-xl: 2.25rem;   /* 36px */
+
+  /* Espaçamentos Modulares (Base 8px) */
+  --spacing-xs: 0.5rem;      /* 8px */
+  --spacing-sm: 1rem;        /* 16px */
+  --spacing-md: 1.5rem;      /* 24px */
+  --spacing-lg: 2rem;        /* 32px */
+  --spacing-xl: 3rem;        /* 48px */
+
+  /* Propriedades Visuais */
+  --border-radius: 8px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition-default: all 0.3s ease;
+}
+
+/* ==========================================================================
+   2. RESET E REGRAS GLOBAIS
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-base-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text-main);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   3. SISTEMA DE GRID DE 12 COLUNAS (MOBILE-FIRST)
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing-sm);
+}
+
+/* Comportamento base (ecrãs móveis: largura total) */
+.col-12, .col-8, .col-6, .col-4, .col-3 {
+  grid-column: span 12;
+}
+
+/* ==========================================================================
+   4. BREAKPOINTS (@media min-width)
+   ========================================================================== */
+
+/* 1. Mobile Amplo (>= 480px) */
+@media (min-width: 480px) {
+  .grid-12 {
+    gap: var(--spacing-sm);
+  }
+}
+
+/* 2. Tablets Retrato (>= 768px) */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+  .col-md-6 { grid-column: span 6; }
+  .col-md-12 { grid-column: span 12; }
+}
+
+/* 3. Tablets Paisagem / Laptops (>= 992px) */
+@media (min-width: 992px) {
+  .col-lg-4 { grid-column: span 4; }
+  .col-lg-8 { grid-column: span 8; }
+}
+
+/* 4. Desktops Padrão (>= 1200px) */
+@media (min-width: 1200px) {
+  .grid-12 {
+    gap: var(--spacing-md);
+  }
+  .col-xl-3 { grid-column: span 3; }
+  .col-xl-4 { grid-column: span 4; }
+  .col-xl-6 { grid-column: span 6; }
+  .col-xl-8 { grid-column: span 8; }
+}
+
+/* 5. Desktops Panorâmicos (>= 1440px) */
+@media (min-width: 1440px) {
+  .container {
+    padding: 0 var(--spacing-lg);
+  }
+  .grid-12 {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* ==========================================================================
+   5. COMPONENTES COM FLEXBOX E METODOLOGIA BEM
+   ========================================================================== */
+
+/* Cabeçalho e Navegação */
+.header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+}
+
+.header__brand {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.header__nav-list {
+  display: flex;
+  list-style: none;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.header__link {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  transition: var(--transition-default);
+}
+
+.header__link:hover {
+  color: var(--color-primary);
+}
+
+/* Destaque / Hero */
+.hero {
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+  background-color: var(--color-surface);
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero__title {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero__subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+  max-width: 700px;
+  margin: 0 auto var(--spacing-md) auto;
+}
+
+/* Cartões (Cards) */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: var(--transition-default);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.card__body {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card__title {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-main);
+}
+
+.card__text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-md);
+  flex-grow: 1;
+}
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-default);
+  text-align: center;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn--secondary {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+/* Formulários */
+.form-section {
+  background-color: var(--color-surface);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  margin: var(--spacing-xl) 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group__label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-main);
+}
+
+.form-group__input {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  outline: none;
+}
+
+.form-group__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(27, 108, 168, 0.2);
+}
+
+/* Rodapé */
+.footer {
+  background-color: #1a202c;
+  color: #cbd5e1;
+  padding: var(--spacing-lg) 0;
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  font-size: var(--font-size-xs);
+}
