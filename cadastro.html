@@ -4,140 +4,103 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registo de Apoiantes - ONG Mãos Abertas</title>
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Cabeçalho e Navegação Principal -->
-  <header>
-    <h1>Registo de Novos Apoiantes</h1>
-    <nav aria-label="Navegação principal">
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="projetos.html">Nossos Projetos</a></li>
-        <li><a href="cadastro.html">Quero Apoiar</a></li>
-      </ul>
-    </nav>
+  <header class="header">
+    <div class="container header__inner">
+      <h1 class="header__brand">ONG Mãos Abertas</h1>
+      <nav aria-label="Navegação principal">
+        <ul class="header__nav-list">
+          <li><a href="index.html" class="header__link">Início</a></li>
+          <li><a href="projetos.html" class="header__link">Nossos Projetos</a></li>
+          <li><a href="cadastro.html" class="btn btn--secondary">Quero Apoiar</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Conteúdo Central: Formulário Semântico com Agrupamentos e Validações -->
-  <main>
-    <section id="formulario-apoio">
-      <h2>Junte-se à Nossa Causa</h2>
-      <p>Preencha os dados abaixo para registar o seu apoio ou candidatura como voluntário na ONG Mãos Abertas.</p>
+  <main class="container">
+    <section id="formulario-apoio" class="form-section">
+      <h2 style="color: var(--color-primary); margin-bottom: 0.5rem;">Junte-se à Nossa Causa</h2>
+      <p style="margin-bottom: 2rem;">Preencha os dados abaixo para registar o seu apoio ou candidatura como voluntário.</p>
 
-      <form action="#" method="post">
-        <!-- Grupo 1: Identificação Civil e Pessoal -->
-        <fieldset>
-          <legend>Dados Pessoais</legend>
+      <form action="#" method="post" class="grid-12">
+        
+        <!-- Bloco de inputs com Grid -->
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="nome-completo">Nome Completo *</label>
+          <input class="form-group__input" type="text" id="nome-completo" name="nome" required placeholder="Digite seu nome completo">
+        </div>
 
-          <div>
-            <label for="nome-completo">Nome Completo *</label><br>
-            <input type="text" id="nome-completo" name="nome" required minlength="3" placeholder="Digite seu nome completo">
-          </div>
-          <br>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="cpf-usuario">CPF *</label>
+          <input class="form-group__input" type="text" id="cpf-usuario" name="cpf" required placeholder="000.000.000-00">
+        </div>
 
-          <div>
-            <label for="cpf-usuario">CPF *</label><br>
-            <input type="text" id="cpf-usuario" name="cpf" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" title="Digite o CPF no formato: 000.000.000-00">
-          </div>
-          <br>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="data-nasc">Data de Nascimento *</label>
+          <input class="form-group__input" type="date" id="data-nasc" name="data_nascimento" required>
+        </div>
 
-          <div>
-            <label for="data-nasc">Data de Nascimento *</label><br>
-            <input type="date" id="data-nasc" name="data_nascimento" required>
-          </div>
-          <br>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="email-usuario">E-mail *</label>
+          <input class="form-group__input" type="email" id="email-usuario" name="email" required placeholder="seuemail@dominio.com">
+        </div>
 
-          <div>
-            <label for="email-usuario">Correio Eletrónico (E-mail) *</label><br>
-            <input type="email" id="email-usuario" name="email" required placeholder="seuemail@dominio.com">
-          </div>
-        </fieldset>
-        <br>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="telefone-usuario">Telefone Celular *</label>
+          <input class="form-group__input" type="tel" id="telefone-usuario" name="telefone" required placeholder="(11) 99999-9999">
+        </div>
 
-        <!-- Grupo 2: Localização e Contacto -->
-        <fieldset>
-          <legend>Endereço e Contato</legend>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="cep-usuario">CEP *</label>
+          <input class="form-group__input" type="text" id="cep-usuario" name="cep" required placeholder="00000-000">
+        </div>
 
-          <div>
-            <label for="telefone-usuario">Telefone Celular *</label><br>
-            <input type="tel" id="telefone-usuario" name="telefone" required pattern="\(\d{2}\)\s\d{4,5}-\d{4}" placeholder="(11) 99999-9999" title="Formato exigido: (XX) 99999-9999">
-          </div>
-          <br>
+        <div class="col-12 form-group">
+          <label class="form-group__label" for="endereco-usuario">Endereço Residencial *</label>
+          <input class="form-group__input" type="text" id="endereco-usuario" name="endereco" required placeholder="Rua, Avenida, Número e Bairro">
+        </div>
 
-          <div>
-            <label for="cep-usuario">CEP *</label><br>
-            <input type="text" id="cep-usuario" name="cep" required pattern="\d{5}-\d{3}" placeholder="00000-000" title="Formato exigido: 00000-000">
-          </div>
-          <br>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="estado-usuario">Estado (UF) *</label>
+          <select class="form-group__input" id="estado-usuario" name="estado" required>
+            <option value="" disabled selected>Selecione seu Estado...</option>
+            <option value="SP">São Paulo (SP)</option>
+            <option value="RJ">Rio de Janeiro (RJ)</option>
+            <option value="OUTRO">Outro Estado</option>
+          </select>
+        </div>
 
-          <div>
-            <label for="endereco-usuario">Endereço Residencial *</label><br>
-            <input type="text" id="endereco-usuario" name="endereco" required placeholder="Rua, Avenida, Número e Bairro">
-          </div>
-          <br>
+        <div class="col-12 col-md-6 form-group">
+          <label class="form-group__label" for="tipo-apoio">Como deseja colaborar? *</label>
+          <select class="form-group__input" id="tipo-apoio" name="tipo_apoio" required>
+            <option value="" disabled selected>Selecione a modalidade...</option>
+            <option value="voluntario-educacao">Voluntariado: Reforço Escolar</option>
+            <option value="doador-mensal">Apoiador Financeiro Recorrente</option>
+          </select>
+        </div>
 
-          <div>
-            <label for="cidade-usuario">Cidade *</label><br>
-            <input type="text" id="cidade-usuario" name="cidade" required placeholder="Sua cidade">
-          </div>
-          <br>
+        <div class="col-12 form-group">
+          <label class="form-group__label" for="mensagem-usuario">Mensagem / Disponibilidade:</label>
+          <textarea class="form-group__input" id="mensagem-usuario" name="mensagem" rows="4" placeholder="Conte-nos um pouco sobre a sua motivação..."></textarea>
+        </div>
 
-          <div>
-            <label for="estado-usuario">Estado (UF) *</label><br>
-            <select id="estado-usuario" name="estado" required>
-              <option value="" disabled selected>Selecione seu Estado...</option>
-              <option value="SP">São Paulo (SP)</option>
-              <option value="RJ">Rio de Janeiro (RJ)</option>
-              <option value="MG">Minas Gerais (MG)</option>
-              <option value="BA">Bahia (BA)</option>
-              <option value="PR">Paraná (PR)</option>
-              <option value="RS">Rio Grande do Sul (RS)</option>
-              <option value="OUTRO">Outro Estado</option>
-            </select>
-          </div>
-        </fieldset>
-        <br>
-
-        <!-- Grupo 3: Interesse Institucional -->
-        <fieldset>
-          <legend>Interesse na ONG</legend>
-
-          <div>
-            <label for="tipo-apoio">Como deseja colaborar? *</label><br>
-            <select id="tipo-apoio" name="tipo_apoio" required>
-              <option value="" disabled selected>Selecione a modalidade...</option>
-              <option value="voluntario-educacao">Voluntariado: Reforço Escolar</option>
-              <option value="voluntario-esporte">Voluntariado: Oficinas de Esporte</option>
-              <option value="doador-mensal">Apoiador Financeiro Recorrente</option>
-              <option value="doador-pontual">Apoiador Financeiro Pontual</option>
-            </select>
-          </div>
-          <br>
-
-          <div>
-            <label for="mensagem-usuario">Mensagem / Disponibilidade:</label><br>
-            <textarea id="mensagem-usuario" name="mensagem" rows="4" cols="50" placeholder="Conte-nos um pouco sobre a sua motivação..."></textarea>
-          </div>
-        </fieldset>
-        <br>
-
-        <!-- Botões de Ação -->
-        <div>
-          <button type="submit">Enviar Cadastro</button>
-          <button type="reset">Limpar Formulário</button>
+        <!-- Botões -->
+        <div class="col-12" style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <button type="submit" class="btn btn--primary">Enviar Cadastro</button>
+          <button type="reset" class="btn" style="background-color: var(--color-border);">Limpar</button>
         </div>
       </form>
     </section>
   </main>
 
-  <!-- Rodapé Institucional -->
-  <footer>
-    <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
-    <address>
-      Dúvidas sobre a coleta de dados? Escreva para: contato@maosabertas.org.br
-    </address>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
+    </div>
   </footer>
 
 </body>
