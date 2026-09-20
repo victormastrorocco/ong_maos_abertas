@@ -8,48 +8,59 @@
 </head>
 <body>
 
-  <!-- Cabeçalho e Navegação Principal -->
-  <header>
-    <h1>ONG Mãos Abertas</h1>
-    <nav aria-label="Navegação principal">
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="projetos.html">Nossos Projetos</a></li>
-        <li><a href="cadastro.html">Quero Apoiar</a></li>
-      </ul>
-    </nav>
+  <!-- Cabeçalho e Navegação -->
+  <header class="header">
+    <div class="container header__inner">
+      <h1 class="header__brand">ONG Mãos Abertas</h1>
+      <nav aria-label="Navegação principal">
+        <ul class="header__nav-list">
+          <li><a href="index.html" class="header__link">Início</a></li>
+          <li><a href="projetos.html" class="header__link">Nossos Projetos</a></li>
+          <li><a href="cadastro.html" class="btn btn--secondary">Quero Apoiar</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Conteúdo Principal Institucional -->
   <main>
-    <section id="sobre-nos">
-      <h2>Transformando Vidas na Comunidade</h2>
-      <!-- Imagem vetorial SVG guardada na pasta local imagens com texto alternativo acessível -->
-      <img src="imagens/ong-apresentacao.svg" width="800" height="500" alt="Logótipo e ilustração institucional da ONG Mãos Abertas simbolizando acolhimento e educação comunitária">
-      
-      <p>A ONG Mãos Abertas atua desde 2026 promovendo a inclusão social e o acesso à educação para crianças em situação de vulnerabilidade.</p>
+    <!-- Seção Destaque (Hero) -->
+    <section id="sobre-nos" class="hero">
+      <div class="container">
+        <h2 class="hero__title">Transformando Vidas na Comunidade</h2>
+        <p class="hero__subtitle">A ONG Mãos Abertas atua desde 2026 promovendo a inclusão social e o acesso à educação para crianças em situação de vulnerabilidade.</p>
+        <img src="imagens/ong-apresentacao.svg" width="800" height="500" alt="Logótipo e ilustração institucional da ONG Mãos Abertas" style="margin: 2rem auto 0 auto;">
+      </div>
     </section>
 
-    <section id="destaques">
-      <h2>Como Você Pode Ajudar</h2>
-      <article>
-        <h3>Seja um Voluntário</h3>
-        <p>Doe seu tempo e conhecimento para nossas oficinas educativas.</p>
-      </article>
-      <article>
-        <h3>Faça uma Doação</h3>
-        <p>Sua contribuição financeira mantém nossos projetos ativos.</p>
-      </article>
+    <!-- Cartões com Grid -->
+    <section id="destaques" class="container" style="margin-bottom: 4rem;">
+      <h2 style="text-align: center; color: var(--color-primary); margin-bottom: 2rem;">Como Você Pode Ajudar</h2>
+      <div class="grid-12">
+        <article class="col-12 col-md-6 card">
+          <div class="card__body">
+            <h3 class="card__title">Seja um Voluntário</h3>
+            <p class="card__text">Doe seu tempo e conhecimento para nossas oficinas educativas.</p>
+            <a href="cadastro.html" class="btn btn--primary">Cadastre-se</a>
+          </div>
+        </article>
+        <article class="col-12 col-md-6 card">
+          <div class="card__body">
+            <h3 class="card__title">Faça uma Doação</h3>
+            <p class="card__text">Sua contribuição financeira mantém nossos projetos ativos.</p>
+            <a href="cadastro.html" class="btn btn--primary">Doar Agora</a>
+          </div>
+        </article>
+      </div>
     </section>
   </main>
 
-  <!-- Rodapé com Dados de Contato Institucional -->
-  <footer>
-    <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
-    <address>
-      Contato: contato@maosabertas.org.br<br>
-      Telefone: (11) 99999-9999
-    </address>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
+      <address style="margin-top: 1rem;">
+        Contato: contato@maosabertas.org.br | Telefone: (11) 99999-9999
+      </address>
+    </div>
   </footer>
 
 </body>
