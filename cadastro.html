@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registo de Apoiantes - ONG Mãos Abertas</title>
+</head>
+<body>
+
+  <!-- Cabeçalho e Navegação Principal -->
+  <header>
+    <h1>Registo de Novos Apoiantes</h1>
+    <nav aria-label="Navegação principal">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="projetos.html">Nossos Projetos</a></li>
+        <li><a href="cadastro.html">Quero Apoiar</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Central: Formulário Semântico e Acessível -->
+  <main>
+    <section id="formulario-apoio">
+      <h2>Junte-se à Nossa Causa</h2>
+      <p>Preencha os campos abaixo para se registar como voluntário ou contribuinte da ONG Mãos Abertas.</p>
+
+      <form action="#" method="post">
+        <!-- Grupo 1: Informações de Identificação -->
+        <fieldset>
+          <legend>Dados Pessoais</legend>
+
+          <div>
+            <label for="nome-completo">Nome Completo *</label><br>
+            <input type="text" id="nome-completo" name="nome" required minlength="3" placeholder="Insira o seu nome completo">
+          </div>
+          <br>
+
+          <div>
+            <label for="email-usuario">Correio Eletrónico (E-mail) *</label><br>
+            <input type="email" id="email-usuario" name="email" required placeholder="exemplo@dominio.com">
+          </div>
+          <br>
+
+          <div>
+            <label for="telefone-usuario">Contacto Telefónico *</label><br>
+            <input type="tel" id="telefone-usuario" name="telefone" required placeholder="(XX) XXXXX-XXXX">
+          </div>
+        </fieldset>
+        <br>
+
+        <!-- Grupo 2: Modalidade de Colaboração -->
+        <fieldset>
+          <legend>Forma de Apoio Pretendida</legend>
+
+          <div>
+            <label for="tipo-colaboracao">Selecione a sua forma de contribuição:</label><br>
+            <select id="tipo-colaboracao" name="tipo_colaboracao" required>
+              <option value="" disabled selected>Escolha uma opção...</option>
+              <option value="voluntario-educacao">Voluntariado: Reforço Escolar</option>
+              <option value="voluntario-esporte">Voluntariado: Atividades Desportivas</option>
+              <option value="doador-mensal">Contribuinte Financeiro Recorrente</option>
+              <option value="doador-pontual">Contribuinte Pontual</option>
+            </select>
+          </div>
+          <br>
+
+          <div>
+            <label for="mensagem-motivacao">Mensagem / Observações:</label><br>
+            <textarea id="mensagem-motivacao" name="mensagem" rows="4" cols="50" placeholder="Partilhe a sua motivação ou disponibilidades de horário..."></textarea>
+          </div>
+        </fieldset>
+        <br>
+
+        <!-- Submissão do Formulário -->
+        <div>
+          <button type="submit">Finalizar Registo</button>
+          <button type="reset">Limpar Dados</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Rodapé Institucional -->
+  <footer>
+    <p>&copy; 2026 ONG Mãos Abertas. Todos os direitos reservados.</p>
+    <address>
+      Questões sobre a recolha de dados? Contacte: privacidade@maosabertas.org.br
+    </address>
+  </footer>
+
+</body>
+</html>
