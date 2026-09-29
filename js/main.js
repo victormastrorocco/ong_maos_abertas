@@ -1,50 +1,55 @@
 // Importa as funções de armazenamento do nosso módulo
 import { salvarNoArmazenamento, recuperarDoArmazenamento } from './modules.js';
 
-// 1. Definição do catálogo de rotas (Mapeamento URL -> Fragmento HTML)
+// 1. Definição do catálogo de rotas baseado em Hash (Evita erro 404 no F5 do GitHub Pages)
 const rotas = {
-    '/': '<h1>Início</h1><p>Bem-vindo à página principal do sistema.</p>',
-    '/projetos': '<h1>Projetos Ativos</h1><p>Conheça nossas frentes de atuação.</p>',
-    '/cadastro': '<h1>Registro</h1><p>Preencha os dados no formulário abaixo.</p>'
+    '#': '<h1>Início</h1><p>Bem-vindo à página principal do sistema.</p>',
+    '#/': '<h1>Início</h1><p>Bem-vindo à página principal do sistema.</p>',
+    '#projetos': '<h1>Projetos Ativos</h1><p>Conheça nossas frentes de atuação.</p>',
+    '#cadastro': '<h1>Registro</h1><p>Preencha os dados no formulário abaixo.</p>'
 };
 
-// 2. Função principal para limpar e renderizar o contêiner alvo
-const renderizarConteudo = (caminho) => {
-    // Localiza o contêiner base na árvore DOM (sua tag <main>)
+// 2. Função principal para limpar e renderizar o contêiner alvo baseado no Hash atual
+const renderizarConteudo = () => {
+    const hash = window.location.hash || '#/';
     const container = document.querySelector('main');
     
-    // Resgata o template da rota solicitada ou devolve erro 404 se não existir
-    const fragmentoHTML = rotas[caminho] || '<h1>Erro 404</h1><p>Página não encontrada.</p>';
+    // Resgata o template da rota solicitada ou devolve erro 404
+    const fragmentoHTML = rotas[hash] || '<h1>Erro 404</h1><p>Página não encontrada.</p>';
     
-    // Insere a marcação HTML interna para atualizar a view dinâmica
     if (container) {
         container.innerHTML = fragmentoHTML;
     }
 };
 
-// 3. O "Escutador" de Navegação SPA (Delegação de Eventos)
+// 3. O "Escutador" de Navegação SPA (Delegação de Eventos via Hash)
 document.addEventListener('click', (evento) => {
-    // Intercepta apenas os links marcados como roteamento interno
     if (evento.target.matches('.header__link') || evento.target.matches('.btn--secondary')) {
         evento.preventDefault(); 
         
-        let caminho = evento.target.getAttribute('href');
-        if (caminho === 'index.html') caminho = '/';
-        if (caminho === 'projetos.html') caminho = '/projetos';
-        if (caminho === 'cadastro.html') caminho = '/cadastro';
+        let href = evento.target.getAttribute('href');
+        let hash = '#/';
         
-        window.history.pushState(null, '', caminho); 
-        renderizarConteudo(caminho);
+        if (href.includes('projetos')) {
+            hash = '#projetos';
+        } else if (href.includes('cadastro')) {
+            hash = '#cadastro';
+        }
+        
+        // Altera o hash na URL sem recarregar o servidor
+        window.location.hash = hash;
+        renderizarConteudo();
     }
 });
 
-// 4. Sincronização com as setas "Voltar" e "Avançar" do navegador
-window.addEventListener('popstate', () => {
-    renderizarConteudo(window.location.pathname);
-});
+// 4. Sincronização com a mudança de hash na URL
+window.addEventListener('hashchange', renderizarConteudo);
 
-// 5. Inicialização e Controle de Formulário (Eventos de Submit)
+// 5. Inicialização: Executa no carregamento da página e gerencia o formulário
 document.addEventListener('DOMContentLoaded', () => {
+    // Renderiza a rota inicial com base no hash atual da URL
+    renderizarConteudo();
+
     const formCadastro = document.getElementById('form-cadastro');
     const alertaSucesso = document.getElementById('alerta-sucesso');
     const alertaErro = document.getElementById('alerta-erro');
@@ -52,29 +57,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formCadastro) {
         
         // --- FLUXO INVERSO: RESTAURAÇÃO DA INTERFACE ---
-        // Recupera os dados salvos anteriormente no navegador
         const dadosSalvos = recuperarDoArmazenamento('ong_voluntario');
-        
-        // Se existirem dados, converte e preenche os campos automaticamente
         if (dadosSalvos) {
-            document.getElementById('nome-completo').value = dadosSalvos.nome || '';
-            document.getElementById('email-usuario').value = dadosSalvos.email || '';
-            document.getElementById('cpf-usuario').value = dadosSalvos.cpf || '';
-            if(dadosSalvos.apoio) {
-                document.getElementById('tipo-apoio').value = dadosSalvos.apoio;
-            }
+            const inputNome = document.getElementById('nome-completo');
+            const inputEmail = document.getElementById('email-usuario');
+            const inputCpf = document.getElementById('cpf-usuario');
+            const selectApoio = document.getElementById('tipo-apoio');
+
+            if (inputNome) inputNome.value = dadosSalvos.nome || '';
+            if (inputEmail) inputEmail.value = dadosSalvos.email || '';
+            if (inputCpf) inputCpf.value = dadosSalvos.cpf || '';
+            if (selectApoio && dadosSalvos.apoio) selectApoio.value = dadosSalvos.apoio;
         }
 
         formCadastro.addEventListener('submit', (evento) => {
             evento.preventDefault(); 
 
-            // Captura os dados do formulário removendo espaços extras
             const nome = document.getElementById('nome-completo').value.trim();
             const email = document.getElementById('email-usuario').value.trim();
             const cpf = document.getElementById('cpf-usuario').value.trim();
             const tipoApoio = document.getElementById('tipo-apoio').value;
 
-            // Lógica Condicional e RegEx
+            // Validação com RegEx
             const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const emailValido = regexEmail.test(email);
 
@@ -82,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const regexCpf = /^[0-9]{11}$/;
             const cpfValido = regexCpf.test(cpfLimpo);
 
-            // Verificação de consistência
             if (nome !== "" && emailValido && cpfValido && tipoApoio !== "") {
                 const dadosUsuario = {
                     nome: nome,
@@ -92,17 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     dataCadastro: new Date().toLocaleDateString('pt-BR')
                 };
 
-                // Persistência da informação (SET)
                 salvarNoArmazenamento('ong_voluntario', dadosUsuario);
 
-                // Manipula o DOM para mostrar sucesso e ocultar erro
-                alertaSucesso.style.display = 'flex';
-                alertaErro.style.display = 'none';
+                if (alertaSucesso) alertaSucesso.style.display = 'flex';
+                if (alertaErro) alertaErro.style.display = 'none';
                 
             } else {
-                // Manipula o DOM para mostrar erro e ocultar sucesso
-                alertaErro.style.display = 'flex';
-                alertaSucesso.style.display = 'none';
+                if (alertaErro) alertaErro.style.display = 'flex';
+                if (alertaSucesso) alertaSucesso.style.display = 'none';
             }
         });
     }
