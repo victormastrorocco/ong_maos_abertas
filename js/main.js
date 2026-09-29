@@ -23,23 +23,17 @@ const renderizarConteudo = (caminho) => {
 };
 
 // 3. O "Escutador" de Navegação SPA (Delegação de Eventos)
-// A delegação otimiza a performance ao colocar um único listener no document
 document.addEventListener('click', (evento) => {
-    // Intercepta apenas os links marcados como roteamento interno (seus links de navegação)
+    // Intercepta apenas os links marcados como roteamento interno
     if (evento.target.matches('.header__link') || evento.target.matches('.btn--secondary')) {
-        // Bloqueia o recarregamento nativo da página inteira
         evento.preventDefault(); 
         
-        // Extrai a rota pretendida do atributo href e ajusta para o formato do nosso catálogo
         let caminho = evento.target.getAttribute('href');
         if (caminho === 'index.html') caminho = '/';
         if (caminho === 'projetos.html') caminho = '/projetos';
         if (caminho === 'cadastro.html') caminho = '/cadastro';
         
-        // Registra a mudança de rota no histórico do navegador via History interface
         window.history.pushState(null, '', caminho); 
-        
-        // Atualiza o DOM injetando a nova interface
         renderizarConteudo(caminho);
     }
 });
@@ -55,44 +49,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const alertaSucesso = document.getElementById('alerta-sucesso');
     const alertaErro = document.getElementById('alerta-erro');
 
-    // Só aplica a lógica se o formulário existir na página atual
     if (formCadastro) {
-        // Escuta ativamente o gatilho de submissão de dados
         formCadastro.addEventListener('submit', (evento) => {
-            // Evita o comportamento natural do navegador de recarregar a tela no submit
             evento.preventDefault(); 
 
-            // Captura os dados do formulário
+            // Captura os dados do formulário removendo espaços extras
             const nome = document.getElementById('nome-completo').value.trim();
             const email = document.getElementById('email-usuario').value.trim();
             const cpf = document.getElementById('cpf-usuario').value.trim();
             const tipoApoio = document.getElementById('tipo-apoio').value;
 
-            // Verificação rigorosa de consistência (validação de dados falhos)
-            // Checa se os campos não estão vazios e se o email tem formato válido
-            const emailValido = email.includes('@') && email.includes('.');
-            const cpfValido = cpf.length >= 11;
+            // --- LÓGICA CONDICIONAL E REGEX ---
+            // Verifica se o email tem formato válido (texto@texto.texto)
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailValido = regexEmail.test(email);
 
+            // Tira traços e pontos do CPF e verifica se sobraram 11 números
+            const cpfLimpo = cpf.replace(/\D/g, ''); 
+            const regexCpf = /^[0-9]{11}$/;
+            const cpfValido = regexCpf.test(cpfLimpo);
+
+            // Verificação de consistência: Tudo deve estar correto e preenchido
             if (nome !== "" && emailValido && cpfValido && tipoApoio !== "") {
                 const dadosUsuario = {
                     nome: nome,
                     email: email,
-                    cpf: cpf,
+                    cpf: cpfLimpo,
                     apoio: tipoApoio,
                     dataCadastro: new Date().toLocaleDateString('pt-BR')
                 };
 
-                // Persistência da informação utilizando localStorage para criar sessões contínuas
+                // Persistência da informação
                 salvarNoArmazenamento('ong_voluntario', dadosUsuario);
 
-                // Manipula o CSS via DOM para mostrar a mensagem de sucesso
+                // Manipula o DOM para mostrar sucesso e ocultar erro
                 alertaSucesso.style.display = 'flex';
                 alertaErro.style.display = 'none';
                 
-                // Limpa o formulário após salvar
                 formCadastro.reset();
             } else {
-                // Altera as condições dinâmicas para exibir a mensagem de erro
+                // Manipula o DOM para mostrar erro e ocultar sucesso
                 alertaErro.style.display = 'flex';
                 alertaSucesso.style.display = 'none';
             }
