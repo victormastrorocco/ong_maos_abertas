@@ -25,18 +25,19 @@
     <section id="formulario-apoio" class="form-section">
       <h2 style="color: var(--color-primary); margin-bottom: 0.5rem;">Junte-se à Nossa Causa</h2>
       <p style="margin-bottom: 2rem;">Preencha os dados abaixo para registar o seu apoio ou candidatura como voluntário.</p>
-      <!-- Exemplo de Alerta e Badges para o Print do DreamShaper -->
-      <div class="alert alert--success" style="margin-top: 1rem;">
-        <strong>Sucesso!</strong> A sua inscrição foi aprovada. <span class="badge badge--success">Confirmado</span>
+      
+      <!-- Alertas ocultos por padrão (display: none). O JavaScript vai mostrá-los. -->
+      <div id="alerta-sucesso" class="alert alert--success" style="display: none; margin-top: 1rem;">
+        <strong>Sucesso!</strong> A sua inscrição foi aprovada e salva no navegador. <span class="badge badge--success">Confirmado</span>
       </div>
       
-      <div class="alert alert--danger">
+      <div id="alerta-erro" class="alert alert--danger" style="display: none; margin-top: 1rem;">
         <strong>Atenção:</strong> Faltam preencher campos obrigatórios. <span class="badge badge--danger">Erro de Envio</span>
       </div>
 
-      <form action="#" method="post" class="grid-12">
+      <!-- Formulário com ID para facilitar a captura de eventos no JS -->
+      <form id="form-cadastro" action="#" method="post" class="grid-12">
         
-        <!-- Bloco de inputs com Grid -->
         <div class="col-12 col-md-6 form-group">
           <label class="form-group__label" for="nome-completo">Nome Completo *</label>
           <input class="form-group__input" type="text" id="nome-completo" name="nome" required placeholder="Digite seu nome completo">
@@ -111,5 +112,7 @@
     </div>
   </footer>
 
+  <!-- Ligação com o arquivo JavaScript -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
