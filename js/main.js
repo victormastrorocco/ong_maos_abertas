@@ -1,54 +1,45 @@
 // Importa as funções de armazenamento do nosso módulo
 import { salvarNoArmazenamento, recuperarDoArmazenamento } from './modules.js';
 
-// 1. Definição do catálogo de rotas baseado em Hash (Evita erro 404 no F5 do GitHub Pages)
-const rotas = {
-    '#': '<h1>Início</h1><p>Bem-vindo à página principal do sistema.</p>',
-    '#/': '<h1>Início</h1><p>Bem-vindo à página principal do sistema.</p>',
-    '#projetos': '<h1>Projetos Ativos</h1><p>Conheça nossas frentes de atuação.</p>',
-    '#cadastro': '<h1>Registro</h1><p>Preencha os dados no formulário abaixo.</p>'
-};
-
-// 2. Função principal para limpar e renderizar o contêiner alvo baseado no Hash atual
-const renderizarConteudo = () => {
+// 1. Função de controle visual de rotas SPA baseadas em Hash (Sem apagar o layout estático)
+const gerenciarRotasSPA = () => {
     const hash = window.location.hash || '#/';
-    const container = document.querySelector('main');
     
-    // Resgata o template da rota solicitada ou devolve erro 404
-    const fragmentoHTML = rotas[hash] || '<h1>Erro 404</h1><p>Página não encontrada.</p>';
+    // Identifica qual página estamos com base na URL atual
+    const path = window.location.pathname;
     
-    if (container) {
-        container.innerHTML = fragmentoHTML;
-    }
+    // Atualiza classes ativas nos links de navegação do menu
+    const links = document.querySelectorAll('.header__link, .btn--secondary');
+    links.forEach(link => {
+        link.style.color = ''; // Reseta cores
+        if (link.getAttribute('href') === 'index.html' && (hash === '#/' || hash === '#')) {
+            link.style.color = 'var(--color-primary)';
+        }
+        if (link.getAttribute('href') === 'projetos.html' && hash === '#projetos') {
+            link.style.color = 'var(--color-primary)';
+        }
+    });
 };
 
-// 3. O "Escutador" de Navegação SPA (Delegação de Eventos via Hash)
+// 2. O "Escutador" de Navegação SPA (Delegação de Eventos via Hash)
 document.addEventListener('click', (evento) => {
-    if (evento.target.matches('.header__link') || evento.target.matches('.btn--secondary')) {
-        evento.preventDefault(); 
+    const target = evento.target.closest('a');
+    if (target && (target.matches('.header__link') || target.matches('.btn--secondary'))) {
+        let href = target.getAttribute('href');
         
-        let href = evento.target.getAttribute('href');
-        let hash = '#/';
-        
-        if (href.includes('projetos')) {
-            hash = '#projetos';
-        } else if (href.includes('cadastro')) {
-            hash = '#cadastro';
+        // Se for um link interno para outra página HTML do projeto, permite a navegação natural para carregar a estrutura completa
+        if (href && (href.includes('index.html') || href.includes('projetos.html') || href.includes('cadastro.html'))) {
+            return; // Deixa o navegador abrir a página normalmente preservando o design
         }
-        
-        // Altera o hash na URL sem recarregar o servidor
-        window.location.hash = hash;
-        renderizarConteudo();
     }
 });
 
-// 4. Sincronização com a mudança de hash na URL
-window.addEventListener('hashchange', renderizarConteudo);
+// 3. Sincronização com a mudança de hash ou carregamento
+window.addEventListener('hashchange', gerenciarRotasSPA);
 
-// 5. Inicialização: Executa no carregamento da página e gerencia o formulário
+// 4. Inicialização: Executa no carregamento da página e gerencia o formulário e localStorage
 document.addEventListener('DOMContentLoaded', () => {
-    // Renderiza a rota inicial com base no hash atual da URL
-    renderizarConteudo();
+    gerenciarRotasSPA();
 
     const formCadastro = document.getElementById('form-cadastro');
     const alertaSucesso = document.getElementById('alerta-sucesso');
@@ -56,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (formCadastro) {
         
-        // --- FLUXO INVERSO: RESTAURAÇÃO DA INTERFACE ---
+        // --- FLUXO INVERSO: RESTAURAÇÃO DA INTERFACE VIA LOCALSTORAGE ---
         const dadosSalvos = recuperarDoArmazenamento('ong_voluntario');
         if (dadosSalvos) {
             const inputNome = document.getElementById('nome-completo');
@@ -78,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cpf = document.getElementById('cpf-usuario').value.trim();
             const tipoApoio = document.getElementById('tipo-apoio').value;
 
-            // Validação com RegEx
+            // Validação com RegEx de consistência
             const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const emailValido = regexEmail.test(email);
 
@@ -95,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     dataCadastro: new Date().toLocaleDateString('pt-BR')
                 };
 
+                // Gravação persistente no localStorage
                 salvarNoArmazenamento('ong_voluntario', dadosUsuario);
 
                 if (alertaSucesso) alertaSucesso.style.display = 'flex';
