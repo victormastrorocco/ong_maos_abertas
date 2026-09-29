@@ -1,1 +1,8 @@
 
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+
+# Pastas de dependências e editores
+node_modules/
+.vscode/
