@@ -1,5 +1,5 @@
-// Importa a função de armazenamento do nosso módulo
-import { salvarNoArmazenamento } from './modules.js';
+// Importa as funções de armazenamento do nosso módulo
+import { salvarNoArmazenamento, recuperarDoArmazenamento } from './modules.js';
 
 // 1. Definição do catálogo de rotas (Mapeamento URL -> Fragmento HTML)
 const rotas = {
@@ -50,6 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const alertaErro = document.getElementById('alerta-erro');
 
     if (formCadastro) {
+        
+        // --- FLUXO INVERSO: RESTAURAÇÃO DA INTERFACE ---
+        // Recupera os dados salvos anteriormente no navegador
+        const dadosSalvos = recuperarDoArmazenamento('ong_voluntario');
+        
+        // Se existirem dados, converte e preenche os campos automaticamente
+        if (dadosSalvos) {
+            document.getElementById('nome-completo').value = dadosSalvos.nome || '';
+            document.getElementById('email-usuario').value = dadosSalvos.email || '';
+            document.getElementById('cpf-usuario').value = dadosSalvos.cpf || '';
+            if(dadosSalvos.apoio) {
+                document.getElementById('tipo-apoio').value = dadosSalvos.apoio;
+            }
+        }
+
         formCadastro.addEventListener('submit', (evento) => {
             evento.preventDefault(); 
 
@@ -59,17 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const cpf = document.getElementById('cpf-usuario').value.trim();
             const tipoApoio = document.getElementById('tipo-apoio').value;
 
-            // --- LÓGICA CONDICIONAL E REGEX ---
-            // Verifica se o email tem formato válido (texto@texto.texto)
+            // Lógica Condicional e RegEx
             const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const emailValido = regexEmail.test(email);
 
-            // Tira traços e pontos do CPF e verifica se sobraram 11 números
             const cpfLimpo = cpf.replace(/\D/g, ''); 
             const regexCpf = /^[0-9]{11}$/;
             const cpfValido = regexCpf.test(cpfLimpo);
 
-            // Verificação de consistência: Tudo deve estar correto e preenchido
+            // Verificação de consistência
             if (nome !== "" && emailValido && cpfValido && tipoApoio !== "") {
                 const dadosUsuario = {
                     nome: nome,
@@ -79,14 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     dataCadastro: new Date().toLocaleDateString('pt-BR')
                 };
 
-                // Persistência da informação
+                // Persistência da informação (SET)
                 salvarNoArmazenamento('ong_voluntario', dadosUsuario);
 
                 // Manipula o DOM para mostrar sucesso e ocultar erro
                 alertaSucesso.style.display = 'flex';
                 alertaErro.style.display = 'none';
                 
-                formCadastro.reset();
             } else {
                 // Manipula o DOM para mostrar erro e ocultar sucesso
                 alertaErro.style.display = 'flex';
