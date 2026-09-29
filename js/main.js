@@ -23,6 +23,7 @@ const renderizarConteudo = (caminho) => {
 };
 
 // 3. O "Escutador" de Navegação SPA (Delegação de Eventos)
+// A delegação otimiza a performance ao colocar um único listener no document
 document.addEventListener('click', (evento) => {
     // Intercepta apenas os links marcados como roteamento interno (seus links de navegação)
     if (evento.target.matches('.header__link') || evento.target.matches('.btn--secondary')) {
@@ -48,42 +49,50 @@ window.addEventListener('popstate', () => {
     renderizarConteudo(window.location.pathname);
 });
 
-// 5. Inicialização: Dispara no carregamento da aplicação
+// 5. Inicialização e Controle de Formulário (Eventos de Submit)
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica do Formulário e Web Storage
     const formCadastro = document.getElementById('form-cadastro');
     const alertaSucesso = document.getElementById('alerta-sucesso');
     const alertaErro = document.getElementById('alerta-erro');
 
-    // Só tenta rodar a lógica de cadastro se o formulário existir na tela atual
+    // Só aplica a lógica se o formulário existir na página atual
     if (formCadastro) {
+        // Escuta ativamente o gatilho de submissão de dados
         formCadastro.addEventListener('submit', (evento) => {
-            evento.preventDefault(); // Previne que a página recarregue ao enviar
+            // Evita o comportamento natural do navegador de recarregar a tela no submit
+            evento.preventDefault(); 
 
-            const nome = document.getElementById('nome-completo').value;
-            const email = document.getElementById('email-usuario').value;
+            // Captura os dados do formulário
+            const nome = document.getElementById('nome-completo').value.trim();
+            const email = document.getElementById('email-usuario').value.trim();
+            const cpf = document.getElementById('cpf-usuario').value.trim();
             const tipoApoio = document.getElementById('tipo-apoio').value;
 
-            // Validação simples
-            if (nome !== "" && email !== "" && tipoApoio !== "") {
+            // Verificação rigorosa de consistência (validação de dados falhos)
+            // Checa se os campos não estão vazios e se o email tem formato válido
+            const emailValido = email.includes('@') && email.includes('.');
+            const cpfValido = cpf.length >= 11;
+
+            if (nome !== "" && emailValido && cpfValido && tipoApoio !== "") {
                 const dadosUsuario = {
                     nome: nome,
                     email: email,
+                    cpf: cpf,
                     apoio: tipoApoio,
                     dataCadastro: new Date().toLocaleDateString('pt-BR')
                 };
 
-                // Salva os dados de forma persistente (LocalStorage)
+                // Persistência da informação utilizando localStorage para criar sessões contínuas
                 salvarNoArmazenamento('ong_voluntario', dadosUsuario);
 
                 // Manipula o CSS via DOM para mostrar a mensagem de sucesso
                 alertaSucesso.style.display = 'flex';
                 alertaErro.style.display = 'none';
                 
-                // Limpa o formulário
+                // Limpa o formulário após salvar
                 formCadastro.reset();
             } else {
-                // Exibe a mensagem de erro
+                // Altera as condições dinâmicas para exibir a mensagem de erro
                 alertaErro.style.display = 'flex';
                 alertaSucesso.style.display = 'none';
             }
